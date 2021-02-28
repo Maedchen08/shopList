@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -21,12 +22,16 @@ import com.example.shopping.presentation.list.ListViewModel
 import java.util.*
 
 class FormFragment : Fragment() {
+    private var itemData:Item?=null
     private lateinit var viewModel: FormViewModel
     private lateinit var binding: FragmentFormBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let{
+
+        }
         initModel()
         subscribe()
 
@@ -36,10 +41,36 @@ class FormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
         binding = FragmentFormBinding.inflate(layoutInflater)
         binding.apply {
+            dateTiet.inputType = InputType.TYPE_NULL
+            dateTiet.setOnClickListener {
 
+                dateTiet.setOnClickListener(View.OnClickListener {
+                    val datePickerDialog = activity?.let { it1 ->
+                        DatePickerDialog(
+                            it1, DatePickerDialog.OnDateSetListener
+                            { view, year, monthOfYear, dayOfMonth ->
+                                val date = "$dayOfMonth/$monthOfYear/$year"
+                                dateTiet.setText(date.toString())
+                            }, year, month, day
+                        )
+                    }
+                    datePickerDialog?.show()
+                })
+            }
+            arguments?.let {
+                val itemUpdate = it.getParcelable<Item>("edit_item")
+                itemUpdate?.let {
 
+                    Toast.makeText(requireContext(), "Success update ${it.id}", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
             submitBtn.setOnClickListener {
                 val quantity: Int = if (quantityEt.editText?.text.toString().isNullOrEmpty()) {
                     0
@@ -55,25 +86,7 @@ class FormFragment : Fragment() {
                 )
                 viewModel.save(item)
             }
-            dateTiet.inputType = InputType.TYPE_NULL
-            dateTiet.setOnClickListener {
-                val calendar = Calendar.getInstance()
-                val year = calendar.get(Calendar.YEAR)
-                val month = calendar.get(Calendar.MONTH)
-                val day = calendar.get(Calendar.DAY_OF_MONTH)
-                dateTiet.setOnClickListener(View.OnClickListener {
-                    val datePickerDialog = activity?.let { it1 ->
-                        DatePickerDialog(
-                            it1, DatePickerDialog.OnDateSetListener
-                            { view, year, monthOfYear, dayOfMonth ->
-                                val date = "$dayOfMonth/$monthOfYear/$year"
-                                dateTiet.setText(date.toString())
-                            }, year, month, day
-                        )
-                    }
-                    datePickerDialog?.show()
-                })
-            }
+
 
             cancelBtn.setOnClickListener {
                 Navigation.findNavController(requireView()).popBackStack()

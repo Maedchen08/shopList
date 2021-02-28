@@ -19,6 +19,9 @@ class ListViewHolder(view: View, val itemClickListener: ItemClickListener): Recy
             deleteItemButton.setOnClickListener {
                 itemClickListener.onDelete(item)
             }
+            cardItem.setOnClickListener {
+                itemClickListener.onEdit(item)
+            }
         }
     }
 }

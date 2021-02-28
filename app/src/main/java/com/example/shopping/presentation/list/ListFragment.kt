@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopping.R
 import com.example.shopping.data.repository.ItemRepository
@@ -64,9 +66,20 @@ class ListFragment() : Fragment() {
     }
 
     private fun subscribe() {
+        //SHOW LIST FORM ITEM
         viewModel.itemsLiveData.observe(this) {
             Log.d("DATA", "$it")
             rvAdapter.setData(it)
+        }
+
+        //edit to form item
+        viewModel.itemLiveData.observe(this) {
+            Log.d("GET ITEM", "$it")
+            Navigation.findNavController(requireView())
+                .navigate(
+                    R.id.action_listFragment_to_formFragment,
+                    bundleOf("edit_item" to it)
+                )
         }
     }
 }

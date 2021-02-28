@@ -14,7 +14,7 @@ import com.example.shopping.data.repository.ItemRepository
 import com.example.shopping.data.repository.ItemRepositoryInterface
 import com.example.shopping.databinding.FragmentListBinding
 
-class ListFragment : Fragment() {
+class ListFragment() : Fragment() {
 
 
     lateinit var viewModel: ListViewModel
@@ -33,9 +33,10 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentListBinding.inflate(layoutInflater)
         binding.apply {
-            rvAdapter = ListViewAdapter()
+            rvAdapter = ListViewAdapter(viewModel)
             recyclerViewItem.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter

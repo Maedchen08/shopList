@@ -3,7 +3,7 @@ package com.example.shopping.data.repository
 import com.example.shopping.data.model.Item
 import java.util.*
 
-class ItemRepository:ItemRepositoryInterface {
+class ItemRepository : ItemRepositoryInterface {
     companion object {
         var itemList = arrayListOf(
             Item(
@@ -31,5 +31,21 @@ class ItemRepository:ItemRepositoryInterface {
     }
 
     override fun list(): List<Item> = itemList
+    override fun save(item: Item): Item {
+        if (item.id == "") {
+            item.id = UUID.randomUUID().toString()
+            itemList.add(item)
+        }
+        return item
+    }
+
+    override fun delete(item: Item): Item {
+        val index = itemList.indexOf(item)
+        itemList.removeAt(index)
+        return item
+
+    }
+
+    override fun findByItem(item: Item): Item = itemList?.get(itemList.indexOf(item))
 
 }

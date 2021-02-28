@@ -26,7 +26,6 @@ class FormFragment : Fragment() {
     private lateinit var binding: FragmentFormBinding
     private lateinit var viewModel: FormViewModel
     private lateinit var loadingDialog:AlertDialog
-//    private var date: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +89,7 @@ class FormFragment : Fragment() {
                         quantity = quantity,
                         id = ""
                     )
-                    viewModel.validation(itemValue!!)
+//                    viewModel.validation(itemValue!!)
 
                 } else {
                     //update
@@ -102,10 +101,10 @@ class FormFragment : Fragment() {
                             quantity = quantity,
                             id = it
                         )
-                        viewModel.save(itemValue!!)
+//                        viewModel.save(itemValue!!)
                     }
                 }
-
+                viewModel.validation(itemValue!!)
 
             }
             cancelBtn.setOnClickListener {
@@ -139,6 +138,7 @@ class FormFragment : Fragment() {
                     loadingDialog.hide()
                 }
                 ResourceStatus.FAIL -> {
+                    loadingDialog.hide()
                     Toast.makeText(
                         requireContext(),
                         it.message,

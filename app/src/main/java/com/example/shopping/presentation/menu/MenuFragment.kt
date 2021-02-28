@@ -12,7 +12,7 @@ import com.example.shopping.databinding.FragmentMenuBinding
 
 
 class MenuFragment : Fragment() {
-    private lateinit var binding : FragmentMenuBinding
+    private lateinit var binding: FragmentMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +25,7 @@ class MenuFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMenuBinding.inflate(layoutInflater)
         binding.apply {
-            menuAddItem.setOnClickListener{
+            menuAddItem.setOnClickListener {
                 findNavController().navigate(R.id.action_menuFragment_to_formFragment)
             }
             menuItemList.setOnClickListener {

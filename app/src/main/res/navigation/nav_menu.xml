@@ -27,7 +27,7 @@
             app:popUpTo="@id/menuFragment" />
         <argument
             android:name="edit_item"
-            app:argType="com.example.shopping.data.model.Item[]"
+            app:argType="com.example.shopping.data.model.Item"
             app:nullable="true" />
     </fragment>
     <fragment
